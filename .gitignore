@@ -1,0 +1,7 @@
+# Repos that castorini-install may clone here
+anserini/
+pyserini/
+rank_llm/
+ragnarok/
+nuggetizer/
+umbrela/
