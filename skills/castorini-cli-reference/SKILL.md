@@ -12,6 +12,8 @@ Quick reference for the shared CLI contract across the three Python Castorini re
 
 All three repos expose a repo-named binary (`nuggetizer`, `ragnarok`, `umbrela`) with converged introspection commands, JSON envelope, exit codes, and public flags.
 
+When a task depends on the current contract shape, start with `<repo> describe ...`, `<repo> schema ...`, or `<repo> doctor --output json` before assuming a sibling repo matches remembered behavior.
+
 ## Shared Command Families
 
 Every repo exposes:
@@ -45,4 +47,4 @@ Read these on demand for detailed specifications:
 - **Write policies are mutually exclusive**: `--resume`, `--overwrite`, and `--fail-if-exists` cannot be combined.
 - **`--dry-run` vs `--validate-only`**: `--dry-run` resolves inputs and reports what would happen. `--validate-only` checks the declared contract (schemas, types) without resolving resources.
 - **Exit code 7** means partial success — some records succeeded, others failed. Check `errors` array in the JSON envelope.
-- **No automated contract tests** yet verify sibling CLIs agree on the shared envelope. When in doubt, run `<repo> schema cli-envelope` to see the current shape.
+- **No automated contract tests** yet verify sibling CLIs agree on the shared envelope. When in doubt, inspect the target repo directly with `<repo> schema cli-envelope`.

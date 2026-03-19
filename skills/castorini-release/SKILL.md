@@ -10,29 +10,12 @@ metadata:
 
 PyPI/TestPyPI publish workflow for nuggetizer, ragnarok, and umbrela.
 
-## Supported Repos
-
-| Repo | Package Name | Current Build |
-|------|-------------|---------------|
-| nuggetizer | `nuggetizer` | setuptools + pyproject.toml |
-| ragnarok | `ragnarok` | setuptools + pyproject.toml |
-| umbrela | `umbrela` | setuptools + pyproject.toml |
-
-## Release Workflow
-
-```
-1. Bump version
-2. Build package (uv build)
-3. Check package (twine check)
-4. Publish to TestPyPI (dry-run)
-5. Test install from TestPyPI
-6. Publish to PyPI (production)
-7. Tag release
-```
+Start with the reference checklist and use the bundled preflight script before uploading anything.
 
 ## Reference Files
 
 - `references/pypi-checklist.md` — Step-by-step checklist with commands
+- `references/release-sequence.md` — Supported repos and the high-level release sequence
 
 ## Preflight Script
 
@@ -50,9 +33,8 @@ This verifies:
 
 ## Gotchas
 
-- All three repos use `bumpver` for version management. Check `pyproject.toml` for the `[tool.bumpver]` config.
-- `uv build` produces both sdist and wheel in `dist/`.
-- TestPyPI and PyPI are separate registries — a successful TestPyPI upload doesn't mean PyPI will accept it.
-- TestPyPI install may fail if dependencies aren't on TestPyPI. Use `--extra-index-url https://pypi.org/simple/` as fallback.
-- Release notes belong in `docs/release-notes/` (umbrela) or repo-specific locations.
-- Tag format varies: check each repo's convention before tagging.
+- All three repos use `bumpver`; confirm the version change landed in the tracked files before you build.
+- `uv build` should be run from the package root, not from the monorepo root or a skill directory.
+- A TestPyPI upload only proves packaging and upload credentials; it does not guarantee PyPI will accept the same distribution later.
+- TestPyPI installs often need `--extra-index-url https://pypi.org/simple/` because transitive dependencies may not exist on TestPyPI.
+- Tagging rules and release-note locations are not fully standardized across the repos, so verify the target repo before creating the final tag.

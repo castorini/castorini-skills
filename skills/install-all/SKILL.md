@@ -43,76 +43,15 @@ If present, use uv silently. If absent, ask the user once: install uv or proceed
 - Before creating any environment, check whether `.venv-shared` already exists in the current workspace root and reuse it if present.
 - Only fall back to a repo-local environment if the shared environment is unavailable or the user explicitly asks for isolation.
 
-## Per-Repo Install
+## Install Flow
 
-### nuggetizer
-
-```bash
-# Clone if needed
-git clone git@github.com:castorini/nuggetizer.git
-
-# uv path
-test -d .venv-shared || uv venv --python 3.11 .venv-shared
-source .venv-shared/bin/activate
-cd nuggetizer
-uv sync --group dev
-
-# pip path
-test -d .venv-shared || python3 -m venv .venv-shared
-source .venv-shared/bin/activate
-cd nuggetizer
-pip install -e .
-pip install pre-commit pytest mypy ruff
-
-# Smoke test
-nuggetizer doctor --output json
-```
-
-### ragnarok
-
-```bash
-# Clone if needed
-git clone git@github.com:castorini/ragnarok.git
-
-# uv path
-test -d .venv-shared || uv venv --python 3.11 .venv-shared
-source .venv-shared/bin/activate
-cd ragnarok
-uv sync --group dev --extra cloud
-
-# pip path
-test -d .venv-shared || python3 -m venv .venv-shared
-source .venv-shared/bin/activate
-cd ragnarok
-pip install -e ".[cloud]"
-pip install pre-commit pytest
-
-# Smoke test
-ragnarok doctor --output json
-```
-
-### umbrela
-
-```bash
-# Clone if needed
-git clone git@github.com:castorini/umbrela.git
-
-# uv path
-test -d .venv-shared || uv venv --python 3.11 .venv-shared
-source .venv-shared/bin/activate
-cd umbrela
-uv sync --group dev --extra cloud
-
-# pip path
-test -d .venv-shared || python3 -m venv .venv-shared
-source .venv-shared/bin/activate
-cd umbrela
-pip install -e ".[cloud]"
-pip install pre-commit pytest mypy ruff
-
-# Smoke test
-umbrela doctor --output json
-```
+1. Resolve which repository or repositories are in scope.
+2. Clone any missing repositories with SSH access to `castorini/<repo>`.
+3. Reuse `.venv-shared` when it already exists in the workspace root.
+4. Prefer `uv` for sync and dependency-group support.
+5. Fall back to `pip` only when `uv` is unavailable or the user explicitly asks.
+6. Run the repo CLI `doctor --output json` smoke test after install.
+7. Run `pre-commit install` in each repository after a source install.
 
 ## Post-Install (all source installs)
 
@@ -123,12 +62,12 @@ pre-commit install
 ## Reference Files
 
 - `references/extras.md` — Per-repo optional dependency stacks
+- `references/install-recipes.md` — Per-repo clone, install, and smoke-test command sequences
 
 ## Gotchas
 
-| Repo | Pitfall |
-|------|---------|
-| nuggetizer | MyPy strict (`disallow_untyped_defs`); `[dependency-groups]` not pip-installable directly |
-| ragnarok | PyPI name is `pyragnarok` not `ragnarok`; async-first design |
-| umbrela | Java 21 only needed for `--extra pyserini` eval workflows |
-| All | Dev dependency-groups require uv; with pip, install dev deps manually |
+- `uv sync --group dev` understands dependency groups; `pip install -e .` does not. If you fall back to pip, install dev tools manually.
+- `ragnarok` uses the package name `pyragnarok` on PyPI even though the repo and CLI command are `ragnarok`.
+- `umbrela` only needs Java 21 for `pyserini` evaluation workflows, not for the default cloud-oriented development install.
+- When reusing `.venv-shared`, make sure it was created with a Python version compatible with the target repo instead of blindly reusing an older interpreter.
+- Run smoke tests from inside the target repository so editable installs and local entry points resolve correctly.

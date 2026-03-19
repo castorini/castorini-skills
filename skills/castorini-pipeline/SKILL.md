@@ -10,6 +10,8 @@ metadata:
 
 End-to-end pipeline orchestration across ragnarok, nuggetizer, and umbrela.
 
+Use this skill to reason about handoffs between repositories, not as a substitute for repo-local verification. After each stage, inspect the actual artifacts before advancing.
+
 ## Pipeline Stages
 
 ```
@@ -58,3 +60,4 @@ Note: Stages 2-4 (nuggetizer) and Stage 5 (umbrela) are independent evaluation p
 - **Write policies**: Use `--resume` on long-running stages to allow restart without reprocessing.
 - **Model consistency**: Document which model was used at each stage for reproducibility.
 - **pyserini dependency**: Both ragnarok (dataset mode) and umbrela (evaluate) require pyserini.
+- **Evaluation paths diverge**: Nuggetizer stages evaluate answer completeness, while umbrela evaluates retrieval relevance. Do not merge those metrics into one score without making the distinction explicit.
