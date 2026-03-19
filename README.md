@@ -1,23 +1,37 @@
 # agent-skills
 
-Claude Code skills for cross-repo workflows in the [Castorini](https://github.com/castorini) research group ecosystem.
+Shared agent skills for cross-repo workflows in the [Castorini](https://github.com/castorini) research ecosystem.
 
-## What's here
+This repository packages reusable skills that are useful across multiple Castorini repositories. It is intentionally small and curated: each shared skill should cover a repeatable cross-repo workflow or contract that would otherwise be duplicated in several codebases.
+
+## What lives here
+
+The shared skills in this repository live under `skills/`.
 
 | Skill | Purpose |
 |-------|---------|
-| `castorini-cli-reference` | Shared CLI contract (`castorini.cli.v1` envelope, shared flags, exit codes) across nuggetizer, ragnarok, and umbrela |
-| `install-all` | Development environment setup and clone/bootstrap workflow for one or more of nuggetizer, ragnarok, and umbrela |
-| `castorini-pipeline` | End-to-end retrieval → rerank → generate → nuggetize → judge pipeline orchestration |
-| `castorini-release` | PyPI/TestPyPI publish workflow for nuggetizer, ragnarok, and umbrela |
+| `castorini-cli-reference` | Shared CLI contract reference for nuggetizer, ragnarok, and umbrela |
+| `install-all` | Development environment setup for one or more Castorini Python repos |
+| `castorini-pipeline` | End-to-end retrieval, generation, nuggetization, and judging workflow coordination |
+| `castorini-release` | PyPI and TestPyPI release workflow guidance for Castorini Python packages |
 
-The shared skills in this repo live under `skills/`.
+## Shared Skills vs Repo-Local Skills
+
+Use this repository for skills that apply across repositories.
+
+Use repo-local skills when the workflow is tightly coupled to one repository's code, tests, data layout, or release process. Those skills should live inside the repository that owns the workflow.
+
+Today the shared skills complement repo-local skill sets that already ship with the Castorini repositories. For example:
+
+- `nuggetizer` ships repo-local quickstart, verification, and evaluation skills
+- `ragnarok` ships repo-local quickstart, verification, and dataset skills
+- `umbrela` ships repo-local quickstart, verification, and evaluation skills
 
 ## Installation
 
-### As a Claude Code plugin
+### Claude Code `skillSources`
 
-Add this repo as a skill source in your Claude Code settings:
+Add this repository as a remote skill source in Claude Code:
 
 ```json
 {
@@ -30,10 +44,20 @@ Add this repo as a skill source in your Claude Code settings:
 }
 ```
 
-### Manual (symlink into monorepo)
+### Local clone
+
+Clone the repository locally:
 
 ```bash
-# From castorini-monorepo root
+git clone git@github.com:castorini/agent-skills.git
+cd agent-skills
+```
+
+An installer script will be added in a follow-up change. Until then, link the skill directories you need into the agent runtime you are using.
+
+### Manual symlink fallback
+
+```bash
 mkdir -p .claude/skills
 ln -s /path/to/agent-skills/skills/castorini-cli-reference .claude/skills/castorini-cli-reference
 ln -s /path/to/agent-skills/skills/install-all .claude/skills/install-all
@@ -41,12 +65,20 @@ ln -s /path/to/agent-skills/skills/castorini-pipeline .claude/skills/castorini-p
 ln -s /path/to/agent-skills/skills/castorini-release .claude/skills/castorini-release
 ```
 
-## Per-repo skills
+## Updating Skills
 
-Each Castorini repo also ships its own skills in `<repo>/.claude/skills/`:
+Skills installed from a clone are copied or linked into an agent-specific directory. They do not update themselves automatically.
 
-- **nuggetizer**: `nuggetizer-quickstart`, `nuggetizer-verify`, `nuggetizer-eval`
-- **ragnarok**: `ragnarok-quickstart`, `ragnarok-verify`, `ragnarok-dataset`
-- **umbrela**: `umbrela-quickstart`, `umbrela-verify`, `umbrela-eval`
+To pick up changes:
 
-These travel with the code — anyone who clones the repo gets the skills.
+```bash
+git pull origin main
+```
+
+Then relink or reinstall the skills you use.
+
+## Why Selective Installation Matters
+
+Installed skills add routing context for the agent. A larger installed set gives the model more candidate skills to consider on every request, which can increase trigger overlap and reduce precision.
+
+Prefer installing only the shared skills you actively use in a workspace instead of installing every available skill by default.
