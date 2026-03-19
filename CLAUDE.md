@@ -7,7 +7,7 @@ This repo contains Claude Code skills for cross-repo workflows in the Castorini 
 ```
 skills/
   castorini-cli-reference/   # shared CLI contract docs
-  castorini-install/         # repo clone/bootstrap and environment setup
+  install-all/               # repo clone/bootstrap and environment setup
   castorini-pipeline/        # cross-repo pipeline orchestration
   castorini-release/         # PyPI/TestPyPI publish workflow
 ```

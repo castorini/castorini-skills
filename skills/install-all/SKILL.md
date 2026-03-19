@@ -1,5 +1,5 @@
 ---
-name: castorini-install
+name: install-all
 description: Set up development environments for nuggetizer, ragnarok, and/or umbrela. Detects which repo you're in or asks. Handles Python 3.11+, uv/pip, clone-if-needed, and smoke tests. Use when onboarding to any Castorini Python repo or setting up multiple repos at once.
 ---
 

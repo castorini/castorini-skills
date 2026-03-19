@@ -1,4 +1,4 @@
-# Repos that castorini-install may clone here
+# Repos that install-all may clone here
 anserini/
 pyserini/
 rank_llm/
