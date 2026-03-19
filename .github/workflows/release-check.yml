@@ -1,0 +1,37 @@
+name: Release Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  INITIAL_VERSION: "0.1.0"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event.pull_request.head.ref == 'automation/skills-sync'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7.3.1
+
+      - name: Fetch existing tags
+        run: git tag --list 'v*' > "$RUNNER_TEMP/existing-tags.txt"
+
+      - name: Validate release artifacts
+        run: |
+          uv run --project scripts/ci-tools ci-tools release validate \
+            --manifest .github/.release-manifest.json \
+            --changelog CHANGELOG.md \
+            --pyproject scripts/ci-tools/pyproject.toml \
+            --tags-file "$RUNNER_TEMP/existing-tags.txt" \
+            --initial-version "$INITIAL_VERSION" \
+            | tee "$GITHUB_STEP_SUMMARY"
