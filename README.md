@@ -51,9 +51,23 @@ Clone the repository locally:
 ```bash
 git clone git@github.com:castorini/agent-skills.git
 cd agent-skills
+./scripts/install-skills.sh list
+./scripts/install-skills.sh add -a claude-code
 ```
 
-An installer script will be added in a follow-up change. Until then, link the skill directories you need into the agent runtime you are using.
+The installer discovers skills from each `SKILL.md` file and copies them into the correct agent directory in the current workspace.
+
+Supported agents:
+
+- `claude-code`
+- `codex`
+- `cursor`
+- `gemini-cli`
+- `github-copilot`
+- `windsurf`
+- `cline`
+- `roo`
+- `opencode`
 
 ### Manual symlink fallback
 
