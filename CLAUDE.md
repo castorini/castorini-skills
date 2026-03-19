@@ -5,10 +5,11 @@ This repo contains Claude Code skills for cross-repo workflows in the Castorini 
 ## Structure
 
 ```
-skills/
+.agents/skills/
   castorini-cli-reference/   # shared CLI contract docs
-  castorini-pipeline/         # cross-repo pipeline orchestration
-  castorini-release/          # PyPI/TestPyPI publish workflow
+  castorini-install/         # repo clone/bootstrap and environment setup
+  castorini-pipeline/        # cross-repo pipeline orchestration
+  castorini-release/         # PyPI/TestPyPI publish workflow
 ```
 
 ## Conventions
