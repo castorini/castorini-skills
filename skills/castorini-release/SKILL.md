@@ -36,7 +36,7 @@ PyPI/TestPyPI publish workflow for nuggetizer, ragnarok, and umbrela.
 Run the preflight checks before publishing:
 
 ```bash
-bash .claude/skills/castorini-release/scripts/preflight.sh <repo-path>
+bash skills/castorini-release/scripts/preflight.sh <repo-path>
 ```
 
 This verifies:

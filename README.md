@@ -11,7 +11,7 @@ Claude Code skills for cross-repo workflows in the [Castorini](https://github.co
 | `castorini-pipeline` | End-to-end retrieval → rerank → generate → nuggetize → judge pipeline orchestration |
 | `castorini-release` | PyPI/TestPyPI publish workflow for nuggetizer, ragnarok, and umbrela |
 
-The shared skills in this repo live under `.agents/skills/`.
+The shared skills in this repo live under `skills/`.
 
 ## Installation
 
@@ -35,10 +35,10 @@ Add this repo as a skill source in your Claude Code settings:
 ```bash
 # From castorini-monorepo root
 mkdir -p .claude/skills
-ln -s /path/to/agent-skills/.agents/skills/castorini-cli-reference .claude/skills/castorini-cli-reference
-ln -s /path/to/agent-skills/.agents/skills/castorini-install .claude/skills/castorini-install
-ln -s /path/to/agent-skills/.agents/skills/castorini-pipeline .claude/skills/castorini-pipeline
-ln -s /path/to/agent-skills/.agents/skills/castorini-release .claude/skills/castorini-release
+ln -s /path/to/agent-skills/skills/castorini-cli-reference .claude/skills/castorini-cli-reference
+ln -s /path/to/agent-skills/skills/castorini-install .claude/skills/castorini-install
+ln -s /path/to/agent-skills/skills/castorini-pipeline .claude/skills/castorini-pipeline
+ln -s /path/to/agent-skills/skills/castorini-release .claude/skills/castorini-release
 ```
 
 ## Per-repo skills

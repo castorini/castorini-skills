@@ -5,7 +5,7 @@ This repo contains Claude Code skills for cross-repo workflows in the Castorini 
 ## Structure
 
 ```
-.agents/skills/
+skills/
   castorini-cli-reference/   # shared CLI contract docs
   castorini-install/         # repo clone/bootstrap and environment setup
   castorini-pipeline/        # cross-repo pipeline orchestration
