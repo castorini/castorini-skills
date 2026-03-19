@@ -11,7 +11,7 @@ dependencies = [
   "typer>=0.15.1",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
   "pytest>=8.3.4",
 ]
@@ -25,3 +25,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ci_tools"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
