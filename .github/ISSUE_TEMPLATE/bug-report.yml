@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a problem in an existing shared skill, installer, or release workflow.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the problem and where it appears.
+      placeholder: The install-all skill points to an outdated command path.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: List the prompt, command, or workflow that exposed the problem.
+      placeholder: |
+        1. Trigger the skill or run the documented command.
+        2. Observe the incorrect behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Explain what should have happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Affected files or skills
+      description: List the relevant skill name, reference file, script, or workflow if known.

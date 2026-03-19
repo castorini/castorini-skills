@@ -1,0 +1,33 @@
+name: Improve existing skill
+description: Propose an improvement to an existing shared skill without introducing a new skill.
+title: "[Improve] "
+labels:
+  - improvement
+body:
+  - type: input
+    id: skill_name
+    attributes:
+      label: Skill name
+      description: Which existing shared skill should be improved?
+      placeholder: castorini-release
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Current gap
+      description: Describe what is missing, confusing, or outdated today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed change
+      description: Describe the improvement you want in the existing skill.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation idea
+      description: Describe how the updated skill should be checked or exercised.
