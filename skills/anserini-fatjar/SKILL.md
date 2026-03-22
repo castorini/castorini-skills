@@ -40,10 +40,11 @@ Stop immediately and warn the user if prerequisites are not satisfied. In partic
 
 ## 2. Download Latest Fatjar
 
-Run:
+From the skill directory, run:
 
 ```bash
-bash /Users/jimmylin/workspace/agent-skills/skills/anserini-fatjar/scripts/fetch_latest_fatjar.sh
+SKILL_DIR="/path/to/anserini-fatjar"
+bash "$SKILL_DIR/scripts/fetch_latest_fatjar.sh"
 ```
 
 This script probes Maven Central metadata at `https://repo1.maven.org/maven2/io/anserini/anserini/maven-metadata.xml`,
