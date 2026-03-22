@@ -1,7 +1,1 @@
-# Repos that install-all may clone here
-anserini/
-pyserini/
-rank_llm/
-ragnarok/
-nuggetizer/
-umbrela/
+.DS_Store
