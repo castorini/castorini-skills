@@ -54,7 +54,7 @@ cd agent-skills
 ./scripts/install-skills.sh list
 ./scripts/install-skills.sh add -a claude-code
 # Or install into any directory (each skill becomes a subfolder there):
-./scripts/install-skills.sh add -d path/to/skills-root
+./scripts/install-skills.sh add -d path/workspace/skills
 ```
 
 The installer discovers skills from each `SKILL.md` file and copies them into the layout expected for a supported agent (`-a`) or into a path you choose (`-d` / `--dir`). 
