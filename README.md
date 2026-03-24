@@ -53,9 +53,12 @@ git clone git@github.com:castorini/agent-skills.git
 cd agent-skills
 ./scripts/install-skills.sh list
 ./scripts/install-skills.sh add -a claude-code
+# Or install into any directory (each skill becomes a subfolder there):
+./scripts/install-skills.sh add -d path/workspace/skills
 ```
 
-The installer discovers skills from each `SKILL.md` file and copies them into the correct agent directory in the current workspace.
+The installer discovers skills from each `SKILL.md` file and copies them into the layout expected for a supported agent (`-a`) or into a path you choose (`-d` / `--dir`). 
+For more information, see `./scripts/install-skills.sh help`.
 
 Supported agents:
 
