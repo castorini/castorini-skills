@@ -104,6 +104,18 @@ skill_exists() {
   return 1
 }
 
+# Must not call die() from inside command substitution — only the subshell exits.
+unsupported_agent_die() {
+  local agent="$1"
+  {
+    echo "Error: Unsupported agent '$agent'."
+    echo "Supported agents:"
+    printf '  %s\n' claude-code codex cursor gemini-cli github-copilot windsurf cline roo opencode
+    echo "To install into an arbitrary path, use -d/--dir (not -a/--agent)."
+  } >&2
+  exit 1
+}
+
 agent_dir_for() {
   local agent="$1"
   case "$agent" in
@@ -111,9 +123,7 @@ agent_dir_for() {
     codex|cursor|gemini-cli|github-copilot|cline|opencode) echo "$PWD/.agents/skills" ;;
     windsurf) echo "$PWD/.windsurf/skills" ;;
     roo) echo "$PWD/.roo/skills" ;;
-    *)
-      die "Unsupported agent '$agent'"
-      ;;
+    *) return 1 ;;
   esac
 }
 
@@ -209,8 +219,12 @@ install_selected() {
   INSTALL_TARGETS=()
   local agent
   local raw_dir
+  local resolved
   for agent in "${AGENTS[@]}"; do
-    append_unique_target "$(agent_dir_for "$agent")"
+    if ! resolved="$(agent_dir_for "$agent")"; then
+      unsupported_agent_die "$agent"
+    fi
+    append_unique_target "$resolved"
   done
   for raw_dir in "${TARGET_DIRS[@]}"; do
     append_unique_target "$(normalize_install_dir "$raw_dir")"
