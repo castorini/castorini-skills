@@ -8,6 +8,7 @@ SCRIPT_NAME="$(basename "$0")"
 YES=false
 FORCE=false
 AGENTS=()
+TARGET_DIRS=()
 SELECTED_SKILLS=()
 
 die() {
@@ -21,16 +22,18 @@ $SCRIPT_NAME - install shared Castorini skills from a local clone
 
 Usage:
   $SCRIPT_NAME list
-  $SCRIPT_NAME add -a <agent> [options]
+  $SCRIPT_NAME add (-a <agent> | -d <path>)... [options]
   $SCRIPT_NAME help
 
 Commands:
   list                  List skills discovered from SKILL.md frontmatter
-  add                   Copy shared skills into one or more agent directories
+  add                   Copy shared skills into agent layout dirs and/or custom paths
   help                  Show this help
 
 Options for add:
   -a, --agent <agent>   Target agent. Repeatable.
+  -d, --dir <path>      Install skills into this directory (skills go in subdirs).
+                        Repeatable. Use instead of or in addition to -a.
   -s, --skill <name>    Install a specific skill. Repeatable.
   -f, --force           Overwrite installed skills without skipping.
   -y, --yes             Skip confirmation prompts.
@@ -114,6 +117,23 @@ agent_dir_for() {
   esac
 }
 
+normalize_install_dir() {
+  local d="$1"
+  case "$d" in
+    /*) printf '%s\n' "$d" ;;
+    *) printf '%s\n' "$PWD/$d" ;;
+  esac
+}
+
+append_unique_target() {
+  local candidate="$1"
+  local existing
+  for existing in "${INSTALL_TARGETS[@]}"; do
+    [ "$existing" = "$candidate" ] && return
+  done
+  INSTALL_TARGETS+=("$candidate")
+}
+
 print_discovered_skill() {
   local skill_file="$1"
   local skill_name
@@ -182,22 +202,31 @@ validate_requested_skills() {
 }
 
 install_selected() {
-  [ "${#AGENTS[@]}" -gt 0 ] || die "add requires at least one -a <agent>"
+  [ "${#AGENTS[@]}" -gt 0 ] || [ "${#TARGET_DIRS[@]}" -gt 0 ] ||
+    die "add requires at least one -a <agent> or -d <path>"
   validate_requested_skills
 
+  INSTALL_TARGETS=()
+  local agent
+  local raw_dir
+  for agent in "${AGENTS[@]}"; do
+    append_unique_target "$(agent_dir_for "$agent")"
+  done
+  for raw_dir in "${TARGET_DIRS[@]}"; do
+    append_unique_target "$(normalize_install_dir "$raw_dir")"
+  done
+
   if [ "${#SELECTED_SKILLS[@]}" -eq 0 ]; then
-    confirm "Install all shared skills for ${AGENTS[*]}?" || exit 0
+    confirm "Install all shared skills into: ${INSTALL_TARGETS[*]}?" || exit 0
   else
-    confirm "Install selected skills for ${AGENTS[*]}?" || exit 0
+    confirm "Install selected skills into: ${INSTALL_TARGETS[*]}?" || exit 0
   fi
 
-  local agent
   local target_dir
   local skill_file
   local skill_name
 
-  for agent in "${AGENTS[@]}"; do
-    target_dir="$(agent_dir_for "$agent")"
+  for target_dir in "${INSTALL_TARGETS[@]}"; do
     mkdir -p "$target_dir"
     while IFS= read -r skill_file; do
       skill_name="$(parse_field "$skill_file" "name")"
@@ -225,6 +254,11 @@ case "$command" in
         -a|--agent)
           [ "$#" -ge 2 ] || die "Missing value for $1"
           AGENTS+=("$2")
+          shift 2
+          ;;
+        -d|--dir)
+          [ "$#" -ge 2 ] || die "Missing value for $1"
+          TARGET_DIRS+=("$2")
           shift 2
           ;;
         -s|--skill)
