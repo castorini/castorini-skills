@@ -12,7 +12,7 @@ bumpver update --patch   # or --minor / --major
 # This updates pyproject.toml and creates a commit
 
 # 3. Run preflight
-bash /path/to/agent-skills/skills/castorini-release/scripts/preflight.sh .
+bash /path/to/castorini-skills/skills/castorini-release/scripts/preflight.sh .
 ```
 
 ## Build and Verify

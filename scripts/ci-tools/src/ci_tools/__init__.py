@@ -1,1 +1,1 @@
-"""CI tools package for the Castorini agent-skills repository."""
+"""CI tools package for the Castorini castorini-skills repository."""

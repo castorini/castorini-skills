@@ -1,6 +1,6 @@
-# agent-skills
+# castorini-skills
 
-This repo contains Claude Code skills for cross-repo workflows in the Castorini research group.
+This repo contains shared agent skills for cross-repo workflows in the Castorini research group.
 
 ## Structure
 
@@ -17,10 +17,10 @@ skills/
 
 - Each skill has a `SKILL.md` with YAML frontmatter (`name`, `description`).
 - The `description` field is a trigger: write "Use when..." not "This skill does...".
-- Reference material goes in `references/` — Claude reads it on demand, not eagerly.
+- Reference material goes in `references/` so agents can load it on demand instead of inlining everything into `SKILL.md`.
 - Runnable helpers go in `scripts/`.
-- Skills describe what to check and what flags exist. They do not railroad Claude into rigid step-by-step flows.
-- Skills reference per-repo `CLAUDE.md` files for build/test/lint instructions. They do not duplicate them.
+- Skills describe what to check and what flags exist. They do not railroad agents into rigid step-by-step flows.
+- Skills reference per-repo instruction files such as `CLAUDE.md` or `AGENTS.md` for build, test, and lint instructions. They do not duplicate them.
 
 ## Target repos
 

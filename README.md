@@ -1,6 +1,6 @@
 # castorini-skills
 
-Shared agent skills for cross-repo workflows in the [Castorini](https://github.com/castorini) research ecosystem.
+`castorini-skills` is a shared agent skill library for cross-repo workflows in the [Castorini](https://github.com/castorini) research ecosystem.
 
 This repository packages reusable skills that are useful across multiple Castorini repositories. It is intentionally small and curated: each shared skill should cover a repeatable cross-repo workflow or contract that would otherwise be duplicated in several codebases.
 
