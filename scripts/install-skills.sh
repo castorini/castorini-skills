@@ -7,6 +7,7 @@ SKILLS_DIR="$REPO_ROOT/skills"
 SCRIPT_NAME="$(basename "$0")"
 YES=false
 FORCE=false
+INSTALL_LOCATION=root
 AGENTS=()
 TARGET_DIRS=()
 SELECTED_SKILLS=()
@@ -32,6 +33,10 @@ Commands:
 
 Options for add:
   -a, --agent <agent>   Target agent. Repeatable.
+  --root                Install agent targets under the current workspace root.
+                        This is the default for -a/--agent.
+  --home                Install agent targets under the user's home directory
+                        when that agent has a supported home-level location.
   -d, --dir <path>      Install skills into this directory (skills go in subdirs).
                         Repeatable. Use instead of or in addition to -a.
   -s, --skill <name>    Install a specific skill. Repeatable.
@@ -116,15 +121,33 @@ unsupported_agent_die() {
   exit 1
 }
 
-agent_dir_for() {
+agent_root_dir_for() {
   local agent="$1"
   case "$agent" in
     claude-code) echo "$PWD/.claude/skills" ;;
-    codex) echo "${CODEX_HOME:-$HOME/.codex}/skills" ;;
+    codex) echo "$PWD/.codex/skills" ;;
     cursor|gemini-cli|github-copilot|cline|opencode) echo "$PWD/.agents/skills" ;;
     windsurf) echo "$PWD/.windsurf/skills" ;;
     roo) echo "$PWD/.roo/skills" ;;
     *) return 1 ;;
+  esac
+}
+
+agent_home_dir_for() {
+  local agent="$1"
+  case "$agent" in
+    claude-code) echo "$HOME/.claude/skills" ;;
+    codex) echo "${CODEX_HOME:-$HOME/.codex}/skills" ;;
+    *) return 1 ;;
+  esac
+}
+
+agent_dir_for() {
+  local agent="$1"
+  case "$INSTALL_LOCATION" in
+    root) agent_root_dir_for "$agent" ;;
+    home) agent_home_dir_for "$agent" ;;
+    *) die "Unknown install location '$INSTALL_LOCATION'" ;;
   esac
 }
 
@@ -223,6 +246,9 @@ install_selected() {
   local resolved
   for agent in ${AGENTS[@]+"${AGENTS[@]}"}; do
     if ! resolved="$(agent_dir_for "$agent")"; then
+      if [ "$INSTALL_LOCATION" = "home" ]; then
+        die "Agent '$agent' does not have a supported home-directory target. Use --root or -d <path> instead."
+      fi
       unsupported_agent_die "$agent"
     fi
     append_unique_target "$resolved"
@@ -275,6 +301,14 @@ case "$command" in
           [ "$#" -ge 2 ] || die "Missing value for $1"
           TARGET_DIRS+=("$2")
           shift 2
+          ;;
+        --root)
+          INSTALL_LOCATION=root
+          shift
+          ;;
+        --home)
+          INSTALL_LOCATION=home
+          shift
           ;;
         -s|--skill)
           [ "$#" -ge 2 ] || die "Missing value for $1"

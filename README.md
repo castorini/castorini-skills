@@ -53,14 +53,24 @@ Clone the repository locally:
 git clone git@github.com:castorini/castorini-skills.git
 cd castorini-skills
 ./scripts/install-skills.sh list
+# Default: install into the current workspace root.
 ./scripts/install-skills.sh add -a claude-code
-# For Codex, this installs into ~/.codex/skills by default:
 ./scripts/install-skills.sh add -a codex
+# Optional: use a supported home-directory location instead.
+./scripts/install-skills.sh add --home -a claude-code
+./scripts/install-skills.sh add --home -a codex
 # Or install into any directory (each skill becomes a subfolder there):
 ./scripts/install-skills.sh add -d path/workspace/skills
 ```
 
-The installer discovers skills from each `SKILL.md` file and copies them into the layout expected for a supported agent (`-a`) or into a path you choose (`-d` / `--dir`). 
+The installer discovers skills from each `SKILL.md` file and copies them into one of three locations:
+
+- `-a <agent>`: the default agent layout under the current workspace root
+- `--home -a <agent>`: the supported home-directory layout for that agent
+- `-d <path>`: an explicit custom destination
+
+Current home-directory targets are supported for `claude-code` and `codex`. Other agents should use the default workspace-root layout or `-d`.
+
 For more information, see `./scripts/install-skills.sh help`.
 
 Supported agents:
