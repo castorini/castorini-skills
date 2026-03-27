@@ -1,0 +1,4 @@
+interface:
+  display_name: "Castorini Serve"
+  short_description: "Serve Anserini retrieval with Castorini HTTP stages"
+  default_prompt: "Use $castorini-serve to stand up Anserini retrieval plus any subset of rank_llm, ragnarok, nuggetizer, and umbrela over HTTP, prefer gpt-4o defaults for OpenAI-backed stages, and explain or run the correct curl or jq pipeline between services."

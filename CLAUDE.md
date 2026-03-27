@@ -11,6 +11,7 @@ skills/
   castorini-onboard/         # single-repo or multi-repo clone/bootstrap and environment setup
   castorini-pipeline/        # cross-repo pipeline orchestration
   castorini-release/         # PyPI/TestPyPI publish workflow
+  castorini-serve/           # local HTTP serving and curl pipeline orchestration
 ```
 
 ## Conventions
