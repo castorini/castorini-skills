@@ -15,6 +15,7 @@ The shared skills in this repository live under `skills/`.
 | `castorini-onboard` | Development environment setup for one or more Castorini Python repos |
 | `castorini-pipeline` | End-to-end retrieval, reranking, generation, nuggetization, and judging workflow coordination |
 | `castorini-release` | PyPI and TestPyPI release workflow guidance for Castorini Python packages |
+| `castorini-serve` | Local HTTP serving recipes and curl/jq pipelines for Anserini, rank_llm, ragnarok, nuggetizer, and umbrela |
 
 ## Shared Skills vs Repo-Local Skills
 
@@ -100,6 +101,7 @@ ln -s /path/to/castorini-skills/skills/castorini-cli-reference .claude/skills/ca
 ln -s /path/to/castorini-skills/skills/castorini-onboard .claude/skills/castorini-onboard
 ln -s /path/to/castorini-skills/skills/castorini-pipeline .claude/skills/castorini-pipeline
 ln -s /path/to/castorini-skills/skills/castorini-release .claude/skills/castorini-release
+ln -s /path/to/castorini-skills/skills/castorini-serve .claude/skills/castorini-serve
 ```
 
 ## Updating Skills
