@@ -24,6 +24,29 @@ uv sync --group dev --extra cloud --extra api
 pip install -e ".[cloud,api]"
 ```
 
+## rank_llm
+
+| Extra | Key Packages | Notes |
+|-------|-------------|-------|
+| `cloud` | openai, google-generativeai, tiktoken | API-backed reranking providers |
+| `local` | torch, transformers | Local model inference |
+| `pyserini` | pyserini, faiss-cpu, pandas | Retrieval workflows; requires Java 21 |
+| `api` | fastapi, flask, uvicorn | HTTP serving |
+| `mcp` | fastmcp plus reranking extras | MCP server workflow |
+| `vllm` | vllm plus local extras | vLLM-backed local inference |
+| `sglang` | sglang plus local extras | SGLang backend |
+| `tensorrt-llm` | tensorrt-llm plus local extras | TensorRT-LLM backend |
+| `training` | accelerate, bitsandbytes, datasets, deepspeed | Finetuning workflow |
+| `all` | Union of all above | Largest install footprint |
+
+Dev dependencies (via `uv sync --group dev`): pre-commit, pytest, ruff.
+
+Install with extras:
+```bash
+uv sync --group dev --extra cloud --extra pyserini
+pip install -e ".[cloud,pyserini]"
+```
+
 ## umbrela
 
 | Extra | Key Packages | Notes |

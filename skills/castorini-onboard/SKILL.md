@@ -1,6 +1,6 @@
 ---
 name: castorini-onboard
-description: Use when onboarding to nuggetizer, ragnarok, or umbrela and you need development environment setup for one repo or several repos at once, including clone-if-needed, uv or pip installation paths, shared virtualenv reuse, and smoke tests.
+description: Use when onboarding to nuggetizer, ragnarok, rank_llm, or umbrela and you need development environment setup for one repo or several repos at once, including clone-if-needed, uv or pip installation paths, shared virtualenv reuse, and smoke tests.
 metadata:
   version: 0.1.0
   visibility: public
@@ -16,11 +16,12 @@ Unified development environment setup for the Castorini Python repos, whether th
 |------|-----------|------------|--------|
 | nuggetizer | `nuggetizer` | `nuggetizer` | `castorini/nuggetizer` |
 | ragnarok | `pyragnarok` | `ragnarok` | `castorini/ragnarok` |
+| rank_llm | `rank-llm` | `rank-llm` | `castorini/rank_llm` |
 | umbrela | `umbrela` | `umbrela` | `castorini/umbrela` |
 
 ## Context Detection
 
-1. If cwd is inside one of the 3 repos (check for `pyproject.toml` with matching project name) → install that one.
+1. If cwd is inside one of the 4 repos (check for `pyproject.toml` with matching project name) → install that one.
 2. If the user explicitly asks for one repo, install only that repo.
 3. If cwd is the monorepo root or elsewhere and the request is ambiguous → ask which repo(s) to install, or install all if the user says so.
 
@@ -68,6 +69,7 @@ pre-commit install
 
 - `uv sync --group dev` understands dependency groups; `pip install -e .` does not. If you fall back to pip, install dev tools manually.
 - `ragnarok` uses the package name `pyragnarok` on PyPI even though the repo and CLI command are `ragnarok`.
+- `rank_llm` uses the package name and CLI binary `rank-llm`, while the repository and import package are spelled `rank_llm`.
 - `umbrela` only needs Java 21 for `pyserini` evaluation workflows, not for the default cloud-oriented development install.
 - When reusing `.venv-shared`, make sure it was created with a Python version compatible with the target repo instead of blindly reusing an older interpreter.
 - Run smoke tests from inside the target repository so editable installs and local entry points resolve correctly.

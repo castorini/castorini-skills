@@ -1,6 +1,6 @@
 # castorini.cli.v1 Envelope Schema
 
-All three Python Castorini repos (nuggetizer, ragnarok, umbrela) return this JSON envelope on `--output json` for primary commands.
+All four Python Castorini repos (`nuggetizer`, `ragnarok`, `rank_llm`, `umbrela`) return this JSON envelope on `--output json` for primary commands.
 
 ## Shape
 
@@ -27,7 +27,7 @@ All three Python Castorini repos (nuggetizer, ragnarok, umbrela) return this JSO
 | Field | Type | Description |
 |-------|------|-------------|
 | `schema_version` | string | Always `"castorini.cli.v1"` |
-| `repo` | string | Repository name: `nuggetizer`, `ragnarok`, or `umbrela` |
+| `repo` | string | Repository name: `nuggetizer`, `ragnarok`, `rank_llm`, or `umbrela` |
 | `command` | string | Subcommand that was invoked (e.g., `create`, `generate`, `judge`) |
 | `mode` | string | Execution mode: `execute`, `dry-run`, or `validate` |
 | `status` | string | Outcome status (see below) |
@@ -61,6 +61,8 @@ All three Python Castorini repos (nuggetizer, ragnarok, umbrela) return this JSO
 | `5` | Validation or preflight failure |
 | `6` | Execution/runtime/backend failure |
 | `7` | Partial success or degraded output |
+
+Not every repo emits every status or exit code today. `rank_llm`, for example, currently uses a smaller subset of the shared taxonomy.
 
 ## Error Shape
 

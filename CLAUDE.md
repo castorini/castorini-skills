@@ -26,4 +26,5 @@ skills/
 
 - [nuggetizer](https://github.com/castorini/nuggetizer) — nugget creation, assignment, and evaluation
 - [ragnarok](https://github.com/castorini/ragnarok) — RAG answer generation and TREC evaluation
+- [rank_llm](https://github.com/castorini/rank_llm) — retrieval and LLM reranking workflows
 - [umbrela](https://github.com/castorini/umbrela) — LLM-based relevance assessment (0–3 labels)

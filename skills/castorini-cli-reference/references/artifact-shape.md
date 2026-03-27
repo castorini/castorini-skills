@@ -33,6 +33,16 @@ Either `path` or `data` is present, not both.
 | `generate-output` | `generate` | JSONL with cited answers per query |
 | `trec25-output` | `convert trec25-format` | JSONL in TREC RAG 2025 submission format |
 
+### rank_llm
+
+| Kind | Command | Description |
+|------|---------|-------------|
+| `data` / `rerank-results` | `rerank` | Inline reranked requests/results payload |
+| `data` / `evaluation-summary` | `evaluate` | Inline aggregate evaluation metrics |
+| `data` / `analysis-summary` | `analyze` | Inline invocation or response analysis summary |
+| `data` / `retrieve-cache-summary` | `retrieve-cache` | Inline retrieval-cache generation summary |
+| `data` / `doctor-output` | `doctor` | Inline environment readiness report |
+
 ### umbrela
 
 | Kind | Command | Description |
@@ -43,7 +53,7 @@ Either `path` or `data` is present, not both.
 
 ## JSONL Conventions
 
-All three repos use JSONL (one JSON object per line) as the primary batch format:
+`nuggetizer`, `ragnarok`, and `umbrela` use JSONL (one JSON object per line) as the primary batch format. `rank_llm` also reads and writes JSONL artifacts, but its CLI frequently returns inline `data` artifacts in the envelope for introspection and summary commands.
 
 - Records are independent and can be processed in any order
 - Each record is self-contained (includes `qid` or `topic_id` for identity)

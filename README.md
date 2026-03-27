@@ -11,9 +11,9 @@ The shared skills in this repository live under `skills/`.
 | Skill | Purpose |
 |-------|---------|
 | `anserini-fatjar` | Quick Anserini setup and smoke-test workflow via the published fatjar on Maven Central |
-| `castorini-cli-reference` | Shared CLI contract reference for nuggetizer, ragnarok, and umbrela |
+| `castorini-cli-reference` | Shared CLI contract reference for nuggetizer, ragnarok, rank_llm, and umbrela |
 | `castorini-onboard` | Development environment setup for one or more Castorini Python repos |
-| `castorini-pipeline` | End-to-end retrieval, generation, nuggetization, and judging workflow coordination |
+| `castorini-pipeline` | End-to-end retrieval, reranking, generation, nuggetization, and judging workflow coordination |
 | `castorini-release` | PyPI and TestPyPI release workflow guidance for Castorini Python packages |
 
 ## Shared Skills vs Repo-Local Skills
@@ -27,6 +27,8 @@ Today the shared skills complement repo-local skill sets that already ship with 
 - `nuggetizer` ships repo-local quickstart, verification, and evaluation skills
 - `ragnarok` ships repo-local quickstart, verification, and dataset skills
 - `umbrela` ships repo-local quickstart, verification, and evaluation skills
+
+`rank_llm` also uses the shared onboarding, CLI-reference, pipeline, and release skills in this repository for cross-repo workflows.
 
 ## Installation
 

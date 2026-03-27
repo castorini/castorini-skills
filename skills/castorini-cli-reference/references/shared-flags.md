@@ -1,6 +1,8 @@
 # Shared CLI Flags
 
-Flags that appear identically across nuggetizer, ragnarok, and umbrela.
+Flags that recur across the shared Castorini CLIs.
+
+The execution-flag matrix is closest across `nuggetizer`, `ragnarok`, and `umbrela`. `rank_llm` shares the introspection commands and JSON envelope, but not every execution flag in this sheet.
 
 ## Universal Flags
 
@@ -63,7 +65,7 @@ Default (none specified): fail if file exists.
 
 ## Introspection Commands
 
-These commands exist on all three repos:
+These commands exist on all four repos:
 
 ```bash
 <repo> describe <command> --output json    # command contract

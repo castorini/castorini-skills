@@ -6,6 +6,7 @@
 |------|-------------|---------------|
 | nuggetizer | `nuggetizer` | setuptools + pyproject.toml |
 | ragnarok | `ragnarok` | setuptools + pyproject.toml |
+| rank_llm | `rank-llm` | setuptools + pyproject.toml |
 | umbrela | `umbrela` | setuptools + pyproject.toml |
 
 ## Release Sequence

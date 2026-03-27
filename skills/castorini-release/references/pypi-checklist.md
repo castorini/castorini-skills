@@ -65,6 +65,7 @@ git push origin "v<version>"
 
 # 12. Update release notes
 # umbrela: docs/release-notes/
+# rank_llm: README release section and docs/release-notes/
 # nuggetizer/ragnarok: README or CHANGELOG
 ```
 
@@ -78,7 +79,7 @@ git push origin "v<version>"
 
 ## bumpver Configuration
 
-All three repos use `bumpver` in `pyproject.toml`:
+All four repos use `bumpver` in `pyproject.toml`:
 
 ```toml
 [tool.bumpver]

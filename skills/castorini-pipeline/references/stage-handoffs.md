@@ -2,7 +2,7 @@
 
 ## Shared Request Format
 
-All three repos accept the same canonical request format:
+`rank_llm`, `ragnarok`, `nuggetizer`, and `umbrela` all work with the same canonical request format at the repo boundaries where request JSON is exchanged:
 
 ```json
 {
@@ -91,4 +91,4 @@ Direct pass-through — assign output is the metrics input:
 | Document ID | `references[i]` | `docid` | `docid` (in qrel) |
 | Passage text | `candidates[i].doc.segment` | `candidates[i].doc.segment` | `passage` |
 
-All three repos' CLIs auto-normalize between `topic_id`/`qid` and `topic`/`query`.
+`rank_llm`, `ragnarok`, and `nuggetizer` all auto-normalize between `topic_id`/`qid` and `topic`/`query` in their packaged CLIs.

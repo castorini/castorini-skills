@@ -1,11 +1,12 @@
 # Pipeline Walkthrough
 
-Complete end-to-end example using all three repos.
+Complete end-to-end example showing where `rank_llm` fits before `ragnarok`, `nuggetizer`, and `umbrela`.
 
 ## Prerequisites
 
 ```bash
 # Install all repos with required extras
+cd rank_llm && uv sync --group dev --extra cloud --extra pyserini && cd ..
 cd ragnarok && uv sync --extra cloud --extra pyserini && cd ..
 cd nuggetizer && uv sync && cd ..
 cd umbrela && uv sync --extra cloud --extra pyserini && cd ..
@@ -13,6 +14,18 @@ cd umbrela && uv sync --extra cloud --extra pyserini && cd ..
 # Set API key
 export OPENAI_API_KEY=sk-...
 ```
+
+## Stage 0: Retrieve and Rerank (rank_llm)
+
+Use this stage before answer generation when the workflow starts from retrieval:
+
+```bash
+rank-llm rerank --model-path castorini/rank_zephyr_7b_v1_full \
+  --dataset dl19 --retrieval-method bm25 --top-k-candidates 100 \
+  --output json
+```
+
+Output: inline rerank results in the `castorini.cli.v1` envelope, plus optional JSONL or TREC artifacts when file flags are used.
 
 ## Stage 1: Generate Answers (ragnarok)
 
@@ -65,7 +78,7 @@ This is an independent evaluation of the retrieval system, not the answers:
 
 ```bash
 umbrela evaluate --backend gpt --model gpt-4o \
-  --qrel dl19-passage --result-file run_bm25.trec \
+  --qrel dl19-passage --result-file run_bm25_rankllm.trec \
   --output json
 ```
 
