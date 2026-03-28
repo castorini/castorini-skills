@@ -23,8 +23,20 @@ pip install <dev-tools>
 |------|------------------------|------------------------|-----------|-------|
 | `nuggetizer` | none | none | `pre-commit pytest mypy ruff` | No optional extras. All runtime dependencies, including OpenAI, are in the base install. |
 | `ragnarok` | `--extra cloud --extra api` | `cloud,api` | `pre-commit pytest` | API-based default dev setup. |
-| `rank_llm` | `--extra cloud --extra api` | `cloud,api` | `pre-commit pytest ruff` | API-backed reranking plus serving support. |
-| `umbrela` | `--extra cloud --extra hf` | `cloud,hf` | `pre-commit pytest mypy ruff` | Cloud default plus local HuggingFace evaluation stack. |
+| `rank_llm` | `--extra openai --extra api` | `openai,api` | `pre-commit pytest ruff` | OpenAI-backed reranking plus serving support. |
+| `umbrela` | `--extra cloud --extra api` | `cloud,api` | `pre-commit pytest mypy ruff` | Cloud default plus API serving support. |
+
+## Recommended shared editable install
+
+For the common multi-repo Castorini source setup, prefer:
+
+```bash
+uv pip install \
+  -e './ragnarok[cloud,api]' \
+  -e './nuggetizer[api]' \
+  -e './umbrela[cloud,api]' \
+  -e './rank_llm[openai,api]'
+```
 
 ## Optional Extras by Repo
 
@@ -46,7 +58,9 @@ No optional extras.
 
 | Extra | Key Packages | Notes |
 |-------|-------------|-------|
-| `cloud` | openai, google-generativeai, tiktoken | API-backed reranking providers |
+| `openai` | openai, python-dotenv, tiktoken | OpenAI-backed reranking support |
+| `genai` | google-generativeai, python-dotenv | Gemini-backed reranking support |
+| `cloud` | openai, google-generativeai, tiktoken | Aggregate of the OpenAI and Gemini stacks |
 | `local` | torch, transformers | Local model inference |
 | `api` | fastapi, flask, uvicorn | HTTP serving |
 | `mcp` | fastmcp plus reranking extras | MCP server workflow |
@@ -61,6 +75,7 @@ No optional extras.
 | Extra | Key Packages | Notes |
 |-------|-------------|-------|
 | `cloud` | openai, google-cloud-aiplatform, retry | API-based, no GPU needed |
+| `api` | fastapi, uvicorn | HTTP serving |
 | `hf` | torch, transformers, datasets | HuggingFace local inference |
 | `fastchat` | fschat, torch, transformers | FastChat local inference |
 | `pyserini` | pyserini | Requires Java 21 |

@@ -51,8 +51,20 @@ If present, use uv silently. If absent, ask the user once: install uv or proceed
 3. Reuse `.venv-shared` when it already exists in the workspace root.
 4. Prefer `uv` for sync and dependency-group support.
 5. Fall back to `pip` only when `uv` is unavailable or the user explicitly asks.
-6. Run the repo CLI `doctor --output json` smoke test after install.
-7. Run `pre-commit install` in each repository after a source install.
+6. For the common multi-repo cloud/API source install, prefer one shared editable install command:
+
+```bash
+uv pip install \
+  -e './ragnarok[cloud,api]' \
+  -e './nuggetizer[api]' \
+  -e './umbrela[cloud,api]' \
+  -e './rank_llm[openai,api]'
+```
+
+This pulls OpenAI support for all four repos and API or `uvicorn` support for each repo from its own declared extras instead of relying on an indirect transitive install from another package.
+
+7. Run the repo CLI `doctor --output json` smoke test after install.
+8. Run `pre-commit install` in each repository after a source install.
 
 ## Post-Install (all source installs)
 
@@ -70,6 +82,7 @@ pre-commit install
 - `uv sync --group dev` understands dependency groups; `pip install -e .` does not. If you fall back to pip, install dev tools manually.
 - `ragnarok` uses the package name `pyragnarok` on PyPI even though the repo and CLI command are `ragnarok`.
 - `rank_llm` uses the package name and CLI binary `rank-llm`, while the repository and import package are spelled `rank_llm`.
+- `rank_llm` supports `openai` and `api` as separate extras; use both when the user wants OpenAI-backed reranking plus HTTP serving helpers.
 - `umbrela` only needs Java 21 for `pyserini` evaluation workflows, not for the default cloud-oriented development install.
 - When reusing `.venv-shared`, make sure it was created with a Python version compatible with the target repo instead of blindly reusing an older interpreter.
 - Run smoke tests from inside the target repository so editable installs and local entry points resolve correctly.
