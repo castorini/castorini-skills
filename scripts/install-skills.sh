@@ -135,7 +135,8 @@ agent_root_dir_for() {
   case "$agent" in
     claude-code) echo "$PWD/.claude/skills" ;;
     codex) echo "$PWD/.codex/skills" ;;
-    cursor|gemini-cli|github-copilot|cline|opencode) echo "$PWD/.agents/skills" ;;
+    cursor) echo "$PWD/.cursor/skills" ;;
+    gemini-cli|github-copilot|cline|opencode) echo "$PWD/.agents/skills" ;;
     windsurf) echo "$PWD/.windsurf/skills" ;;
     roo) echo "$PWD/.roo/skills" ;;
     *) return 1 ;;

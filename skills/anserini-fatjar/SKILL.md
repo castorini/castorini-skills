@@ -63,7 +63,7 @@ extracts the current release, and downloads `anserini-<version>-fatjar.jar` from
 At the moment, a direct example URL is:
 
 ```bash
-wget https://repo1.maven.org/maven2/io/anserini/anserini/1.7.0/anserini-1.7.0-fatjar.jar
+wget https://repo1.maven.org/maven2/io/anserini/anserini/1.7.1/anserini-1.7.1-fatjar.jar
 ```
 
 All subsequent commands assume the jar is available in the current working directory as `anserini-<version>-fatjar.jar`.
